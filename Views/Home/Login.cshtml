@@ -1,0 +1,59 @@
+﻿@model eCommerceWebsite_1912C1.Models.LoginModel
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+@Html.Raw(TempData["UserNotLoggedIn"])
+<main class="main">
+    <nav class="breadcrumb-nav">
+        <div class="container">
+            <ul class="breadcrumb">
+                <li><a href="#"><i class="d-icon-home"></i></a></li>
+                <li>Login</li>
+            </ul>
+        </div>
+    </nav>
+    <div class="page-content mt-6 pb-2 mb-10">
+        <div class="container">
+            <div class="login-popup">
+                <div class="form-box">
+                    <div class="tab tab-nav-simple tab-nav-boxed form-tab">
+                        <ul class="nav nav-tabs nav-fill align-items-center border-no justify-content-center mb-5" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active border-no lh-1 ls-normal" href="#register">Login</a>
+                            </li>
+
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="register">
+
+                                <p style="color:red;"> @Html.ValidationMessage("InvalidLoginError")</p>
+
+                                @using (Html.BeginForm())
+                                {
+                                    <div class="form-group">
+                                        @Html.ValidationMessageFor(model => model.Email, "", new { style = "font-size:12px; color:red; font-weight:bold;" })
+                                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { type = "email", @class = "form-control", placeholder = "Your Email address" } })
+                                    </div>                           
+
+
+
+                                    <div class="form-group">
+                                        @Html.ValidationMessageFor(model => model.Password, "", new { style = "font-size:12px; color:red; font-weight:bold;" })
+                                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", placeholder = "Your Password", type = "password" } })
+                                    </div>
+                                                                 
+
+
+                                    <input type="submit" class="btn btn-dark btn-block btn-rounded" value="Login" />
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+

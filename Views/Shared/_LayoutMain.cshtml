@@ -1,0 +1,400 @@
+﻿@using eCommerceWebsite_1912C1.Models;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>Riode - Ultimate eCommerce Template</title>
+
+    <meta name="keywords" content="HTML5 Template" />
+    <meta name="description" content="Riode - Ultimate eCommerce Template">
+    <meta name="author" content="D-THEMES">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/External/Main/images/icons/favicon.png">
+
+    <script>
+        WebFontConfig = {
+            google: { families: ['Poppins:300,400,500,600,700,800'] }
+        };
+        (function (d) {
+            var wf = d.createElement('script'), s = d.scripts[0];
+            wf.src = '/External/Main/js/webfont.js';
+            wf.async = true;
+            s.parentNode.insertBefore(wf, s);
+        })(document);
+    </script>
+
+
+
+    <link rel="stylesheet" type="text/css" href="/External/Main/vendor/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="/External/Main/vendor/animate/animate.min.css">
+
+    <!-- Plugins CSS File -->
+    <link rel="stylesheet" type="text/css" href="/External/Main/vendor/magnific-popup/magnific-popup.min.css">
+    <link rel="stylesheet" type="text/css" href="/External/Main/vendor/owl-carousel/owl.carousel.min.css">
+
+    <!-- Main CSS File -->
+    <link rel="stylesheet" type="text/css" href="/External/Main/css/demo1.min.css">
+
+    <link rel="stylesheet" type="text/css" href="/External/Main/vendor/nouislider/nouislider.min.css">
+    <link rel="stylesheet" type="text/css" href="/External/Main/css/style.min.css">
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css" type="text/css" media="all" />
+    <link rel="stylesheet" type="text/css" href="/External/Main/css/price_range_style.css">
+</head>
+
+<body class="home">
+
+    <div class="page-wrapper">
+        <h1 class="d-none">Riode - Responsive eCommerce HTML Template</h1>
+        <header class="header">
+            <div class="header-middle sticky-header fix-top sticky-content">
+                <div class="container">
+                    <div class="header-left">
+                        <a href="#" class="mobile-menu-toggle">
+                            <i class="d-icon-bars2"></i>
+                        </a>
+                        <a href="demo1.html" class="logo">
+                            <img src="/External/Main/images/logo.png" alt="logo" width="153" height="44" />
+                        </a>
+                        <!-- End Logo -->
+                    </div>
+                    <div class="header-right">
+                        <a href="tel:+923322261706" class="icon-box icon-box-side">
+                            <div class="icon-box-icon mr-0 mr-lg-2">
+                                <i class="d-icon-phone"></i>
+                            </div>
+                            <div class="icon-box-content d-lg-show">
+                                <h4 class="icon-box-title">Call Us Now:</h4>
+                                <p>0(332) 2261706</p>
+                            </div>
+                        </a>
+
+                        <span class="divider"></span>
+                        
+                        <div class="dropdown cart-dropdown type2 cart-offcanvas mr-0 mr-lg-2">
+                            
+                            @{ 
+                                int products_in_cart = 0;
+                                int subtotal = 0;
+                            }
+                            
+                            @if (Session["cart"] != null)
+                            {
+
+
+                            <!-- End Cart Toggle -->
+                            <div class="dropdown-box">
+                                <div class="cart-header">
+                                    <h4 class="cart-title">Shopping Cart</h4>
+                                    <a href="#" class="btn btn-dark btn-link btn-icon-right btn-close">
+                                        close<i class="d-icon-arrow-right"></i><span class="sr-only">Cart</span>
+                                    </a>
+                                </div>
+                                <div class="products scrollable">
+
+                                    @foreach(cart item in (List<cart>)Session["cart"])
+                                    { 
+                                    <div class="product product-cart">
+                                        <figure class="product-media">
+                                            <a href="/Home/ProductDetails/@item.Product.Product_id">
+                                                <img src="@item.Product.Picture" alt="product" width="80"
+                                                     height="88" />
+                                            </a>
+                                            <a href="@Url.Action("RemoveFromCart","Home", new { productId =
+                                                            item.Product.Product_id, url ="Shop"})" 
+                                               class="btn btn-link btn-close">
+                                                <i class="fas fa-times"></i><span class="sr-only">Close</span>
+                                            </a>
+                                        </figure>
+                                        <div class="product-detail">
+                                            <a href="#" class="product-name">@item.Product.Name</a>
+                                            <div class="price-box">
+                                                <span class="product-quantity">@item.qty</span>
+                                                <span class="product-price">$@item.Product.Price</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                        subtotal += Convert.ToInt32(item.qty) * Convert.ToInt32(item.Product.Price);
+                                        products_in_cart += Convert.ToInt32(item.qty);
+                                    }
+
+                                   
+                                    <!-- End of Cart Product -->
+                                </div>
+                                <!-- End of Products  -->
+                                <div class="cart-total">
+                                    <label>Subtotal:</label>
+                                    <span class="price">$@subtotal</span>
+                                </div>
+                                <!-- End of Cart Total -->
+                                <div class="cart-action">
+                                    <a href="/Home/ViewCart" class="btn btn-dark btn-link">View Cart</a>
+                                    <a href="/Home/Checkout" class="btn btn-dark"><span>Go To Checkout</span></a>
+                                </div>
+                                <!-- End of Cart Action -->
+                            </div>
+                            <!-- End Dropdown Box -->
+
+                            }
+                            <a href="#" class="cart-toggle label-block link">
+                                <div class="cart-label d-lg-show">
+                                    <span class="cart-name">Shopping Cart:</span>
+                                    <span class="cart-price">$@subtotal</span>
+                                </div>
+                                <i class="d-icon-bag"><span class="cart-count">@products_in_cart</span></i>
+                            </a>
+                            <div class="cart-overlay"></div>
+                            
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <hr>
+            <div class="header-bottom d-lg-show">
+                <div class="container">
+
+                    <div class="header-left">
+                        <nav class="main-nav">
+                            <ul class="menu">
+
+                                <li class="active">
+                                    <a href="/Home/Index">Home</a>
+                                </li>
+
+                                <li>
+                                    <a href="/Home/Shop">Shop</a>
+                                </li>
+
+                                <li>
+                                    <a href="/Home/AboutUs">About Us</a>
+                                </li>
+
+                                <li>
+                                    <a href="/Home/ContactUs">Contact Us</a>
+                                </li>
+
+                                @if (Session["UserName"] != null)
+                                {
+                                    <li>
+                                        <a href="/Home/OrderHistory">Order History</a>
+                                    </li>
+
+                                    <li>
+                                        <a href="/Home/EditProfile">Edit Profile</a>
+                                    </li>
+                                   
+                                }
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="header-right">
+                        @if (Session["UserName"] != null)
+                        {
+                            <a href="#"><i class="d-icon-user"></i>Welcome, @Session["UserName"]!</a>
+                            <a href="/Home/Logout" class="ml-6"><i class="d-icon-arrow-up"></i>Logout</a>
+                        }
+                        else
+                        { 
+                            <a href="/Home/Login" target="_blank"><i class="d-icon-arrow-right"></i>Login</a>
+                            <a href="/Home/Register" class="ml-6"><i class="d-icon-user"></i>Register</a>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- End Header -->
+
+        @RenderBody()
+
+        <!-- Footer Start -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-middle text-center">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6">
+                            <div class="widget widget-info">
+                                <h4 class="widget-title">Contact Info</h4>
+                                <ul class="widget-body">
+                                    <li>
+                                        <label>Phone:</label>
+                                        <a href="tel:+923322261706">Toll Free (0332) 2261706</a>
+                                    </li>
+                                    <li>
+                                        <label>Email:</label>
+                                        <a href="mailto:azazulhaq1997@gmail.com">azazulhaq1997@gmail.com</a>
+                                    </li>
+                                    <li>
+                                        <label>Address:</label>
+                                        <a href="#">Sector 11-B, North Karachi</a>
+                                    </li>
+                                    <li>
+                                        <label>WORKING DAYS / HOURS:</label>
+                                    </li>
+                                    <li>
+                                        <a href="#">Mon - Sun / 9:00 AM - 5:00 PM</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- End Widget -->
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="widget ml-lg-4">
+                                <h4 class="widget-title">Navigation</h4>
+                                <ul class="widget-body">
+                                    <li>
+                                        <a href="demo1.html">Home</a>
+                                    </li>
+
+                                    <li>
+                                        <a href="about-us.html">Shop</a>
+                                    </li>
+
+                                    <li>
+                                        <a href="demo1.html">About Us</a>
+                                    </li>
+
+                                    <li>
+                                        <a href="demo1.html">Contact Us</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- End Widget -->
+                        </div>
+
+                        <div class="col-lg-4 col-md-6">
+                            <div class="widget ml-lg-4">
+                                <h4 class="widget-title">Contact Info</h4>
+                                <ul class="widget-body">
+                                    <li>
+                                        <a href="#">Sign in</a>
+                                    </li>
+                                    <li>
+                                        <a href="cart.html">Register</a>
+                                    </li>
+                                    <li>
+                                        <a href="wishlist.html">View Cart</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Help</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- End Widget -->
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- End FooterMiddle -->
+                <div class="footer-bottom">
+                    <div class="footer-left">
+                        <figure class="payment">
+                            <img src="/External/Main/images/payment.png" alt="payment" width="159" height="29" />
+                        </figure>
+                    </div>
+                    <div class="footer-center">
+                        <p class="copyright">AUH &copy; 2021. All Rights Reserved</p>
+                    </div>
+                    <div class="footer-right">
+                        <div class="social-links">
+                            <a href="https://www.facebook.com/TheBestInTheWorld.4948" class="social-link social-facebook fab fa-facebook-f"></a>
+                            <a href="https://twitter.com/azazulhaq97" class="social-link social-twitter fab fa-twitter"></a>
+                            <a href="https://pk.linkedin.com/in/azazulhaq97" class="social-link social-linkedin fab fa-linkedin-in"></a>
+                        </div>
+                    </div>
+                </div>
+                <!-- End FooterBottom -->
+            </div>
+        </footer>
+        <!-- End Footer -->
+    </div>
+    <!-- Sticky Footer -->
+    <div class="sticky-footer sticky-content fix-bottom">
+        <a href="demo1.html" class="sticky-link active">
+            <i class="d-icon-home"></i>
+            <span>Home</span>
+        </a>
+        <a href="shop.html" class="sticky-link">
+            <i class="d-icon-volume"></i>
+            <span>Categories</span>
+        </a>
+        <a href="account.html" class="sticky-link">
+            <i class="d-icon-user"></i>
+            <span>Account</span>
+        </a>
+    </div>
+    <!-- Scroll Top -->
+    <a id="scroll-top" href="#top" title="Top" role="button" class="scroll-top"><i class="d-icon-arrow-up"></i></a>
+
+    <!-- MobileMenu -->
+    <div class="mobile-menu-wrapper">
+        <div class="mobile-menu-overlay">
+        </div>
+        <!-- End of Overlay -->
+        <a class="mobile-menu-close" href="#"><i class="d-icon-times"></i></a>
+        <!-- End of CloseButton -->
+        <div class="mobile-menu-container scrollable">
+            <form action="#" class="input-wrapper">
+                <input type="text" class="form-control" name="search" autocomplete="off"
+                       placeholder="Search your keyword..." required />
+                <button class="btn btn-search" type="submit">
+                    <i class="d-icon-search"></i>
+                </button>
+            </form>
+            <!-- End of Search Form -->
+            <ul class="mobile-menu mmenu-anim">
+                <li>
+                    <a href="demo1.html">Home</a>
+                </li>
+
+                <li>
+                    <a href="about-us.html">Shop</a>
+                </li>
+
+                <li>
+                    <a href="demo1.html">About Us</a>
+                </li>
+
+                <li>
+                    <a href="demo1.html">Contact Us</a>
+                </li>
+            </ul>
+            <!-- End of MobileMenu -->
+            <!-- <ul class="mobile-menu mmenu-anim">
+                <li><a href="login.html">Login</a></li>
+                <li><a href="cart.html">My Cart</a></li>
+                <li><a href="wishlist.html">Wishlist</a></li>
+            </ul> -->
+            <!-- End of MobileMenu -->
+        </div>
+    </div>
+
+
+
+    <!-- Plugins JS File -->
+    <script src="/External/Main/vendor/jquery/jquery.min.js"></script>
+    <script src="/External/Main/vendor/parallax/parallax.min.js"></script>
+    <script src="/External/Main/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+    <script src="/External/Main/vendor/elevatezoom/jquery.elevatezoom.min.js"></script>
+    <script src="/External/Main/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+    <script src="/External/Main/vendor/owl-carousel/owl.carousel.min.js"></script>
+    <!-- Main JS File -->
+    <script src="/External/Main/js/main.min.js"></script>
+    <script src="/External/Main/vendor/nouislider/nouislider.min.js"></script>
+    <script src="/External/Main/vendor/sticky/sticky.min.js"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="/External/Main/js/price_range_script.js"></script>
+</body>
+
+
+<!-- Mirrored from d-themes.com/html/riode/demo1.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 27 Jul 2021 09:06:58 GMT -->
+</html>

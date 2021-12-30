@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="eCommerce_1912C1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="Category_ID" />
+    </Key>
+    <Property Name="Category_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Category_Name" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="Order_Details">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="Order_Code" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Order_ID" Type="int" />
+    <Property Name="Product_id" Type="int" />
+    <Property Name="Qty" Type="int" />
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Orders">
+    <Key>
+      <PropertyRef Name="Order_ID" />
+    </Key>
+    <Property Name="Order_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Total_Amount" Type="int" />
+    <Property Name="User_ID" Type="int" />
+    <Property Name="Quantity" Type="int" />
+    <Property Name="Order_Date" Type="date" />
+    <Property Name="Payment_Made" Type="int" />
+    <Property Name="Order_Status" Type="varchar(max)" />
+    <Property Name="Payment_Method" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="Products">
+    <Key>
+      <PropertyRef Name="Product_id" />
+    </Key>
+    <Property Name="Product_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar(max)" />
+    <Property Name="Price" Type="int" />
+    <Property Name="Picture" Type="varchar(max)" />
+    <Property Name="LongDescription" Type="varchar(max)" />
+    <Property Name="ShortDescription" Type="varchar(max)" />
+    <Property Name="Available_Stock" Type="int" />
+    <Property Name="Category_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="User_ID" />
+    </Key>
+    <Property Name="User_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar(max)" />
+    <Property Name="City" Type="varchar(max)" />
+    <Property Name="Address" Type="varchar(max)" />
+    <Property Name="Email" Type="varchar(max)" />
+    <Property Name="Password" Type="varchar(max)" />
+    <Property Name="Contact_Number" Type="varchar(max)" />
+    <Property Name="Email_Verified" Type="varchar" MaxLength="1" />
+    <Property Name="Registration_Date" Type="date" />
+    <Property Name="Role" Type="varchar(max)" />
+  </EntityType>
+  <Association Name="FK__Order_Det__Order__2D27B809">
+    <End Role="Orders" Type="Self.Orders" Multiplicity="0..1" />
+    <End Role="Order_Details" Type="Self.Order_Details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orders">
+        <PropertyRef Name="Order_ID" />
+      </Principal>
+      <Dependent Role="Order_Details">
+        <PropertyRef Name="Order_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Order_Det__Produ__2E1BDC42">
+    <End Role="Products" Type="Self.Products" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Order_Details" Type="Self.Order_Details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="Product_id" />
+      </Principal>
+      <Dependent Role="Order_Details">
+        <PropertyRef Name="Product_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Orders__User_ID__2A4B4B5E">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="User_ID" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="User_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Products__Catego__276EDEB3">
+    <End Role="Category" Type="Self.Category" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Products" Type="Self.Products" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="Category_ID" />
+      </Principal>
+      <Dependent Role="Products">
+        <PropertyRef Name="Category_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="eCommerce_1912C1ModelStoreContainer">
+    <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Order_Details" EntityType="Self.Order_Details" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Order_Det__Order__2D27B809" Association="Self.FK__Order_Det__Order__2D27B809">
+      <End Role="Orders" EntitySet="Orders" />
+      <End Role="Order_Details" EntitySet="Order_Details" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Order_Det__Produ__2E1BDC42" Association="Self.FK__Order_Det__Produ__2E1BDC42">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="Order_Details" EntitySet="Order_Details" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Orders__User_ID__2A4B4B5E" Association="Self.FK__Orders__User_ID__2A4B4B5E">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Products__Catego__276EDEB3" Association="Self.FK__Products__Catego__276EDEB3">
+      <End Role="Category" EntitySet="Category" />
+      <End Role="Products" EntitySet="Products" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

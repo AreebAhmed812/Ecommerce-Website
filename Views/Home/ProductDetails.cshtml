@@ -1,0 +1,157 @@
+﻿@model eCommerceWebsite_1912C1.Models.Product
+
+@{
+    ViewBag.Title = "ProductDetails";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+<main class="main mt-8 single-product">
+    <div class="page-content mb-10 pb-6">
+        <div class="container">
+            <div class="product product-single row mb-8">
+                <div class="col-md-6">
+                    <div class="product-gallery pg-vertical">
+                        <div class="product-single-carousel owl-carousel owl-theme owl-nav-inner row cols-1">
+                            <figure class="product-image">
+                                <img src="@Html.DisplayFor(model => model.Picture)"
+                                     data-zoom-image="images/product/product-7-1-800x900.jpg"
+                                     alt="Women's Brown Leather Backpacks" width="800" height="900">
+                            </figure>
+                            <figure class="product-image">
+                                <img src="@Html.DisplayFor(model => model.Picture)"
+                                     data-zoom-image="images/product/product-7-2-800x900.jpg"
+                                     alt="Women's Brown Leather Backpacks" width="800" height="900">
+                            </figure>
+                            <figure class="product-image">
+                                <img src="@Html.DisplayFor(model => model.Picture)"
+                                     data-zoom-image="images/product/product-7-3-800x900.jpg"
+                                     alt="Women's Brown Leather Backpacks" width="800" height="900">
+                            </figure>
+                            <figure class="product-image">
+                                <img src="@Html.DisplayFor(model => model.Picture)"
+                                     data-zoom-image="images/product/product-7-4-800x900.jpg"
+                                     alt="Women's Brown Leather Backpacks" width="800" height="900">
+                            </figure>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="product-details">
+                        <div class="product-navigation">
+                            <ul class="breadcrumb breadcrumb-lg">
+                                <li><a href="/Home/Index"><i class="d-icon-home"></i></a></li>
+                                <li><a href="/Home/Shop" class="active">Shop</a></li>
+                                <li>@Html.DisplayFor(model => model.Name)</li>
+                            </ul>
+                        </div>
+
+                        <h1 class="product-name">@Html.DisplayFor(model => model.Name)</h1>
+                        <div class="product-meta">
+                            CATEGORY: <span class="product-brand">@Html.DisplayFor(model => model.Category.Category_Name)</span>
+                        </div>
+                        <div class="product-price">
+                            <ins class="new-price">$@Html.DisplayFor(model => model.Price)</ins>
+                        </div>
+                        <div class="ratings-container">
+                            <div class="ratings-full">
+                                <span class="ratings" style="width:100%"></span>
+                                <span class="tooltiptext tooltip-top"></span>
+                            </div>
+                        </div>
+                        <p class="product-short-desc">
+                           @Html.DisplayFor(model => model.ShortDescription)
+                        </p>
+
+                        <hr class="product-divider">
+                        <div class="sticky-content fix-top product-sticky-content">
+                            <div class="container">
+                                <div class="sticky-product-details">
+                                    <figure class="product-image">
+                                        <a href="product.html">
+                                            <img src="@Html.DisplayFor(model => model.Picture)" width="90"
+                                                 height="90" alt="Product image">
+                                        </a>
+                                    </figure>
+                                    <div>
+                                        <h4 class="product-title">
+                                            <a href="product.html">
+                                                @Html.DisplayFor(model => model.Name)
+                                            </a>
+                                        </h4>
+                                        <div class="product-info">
+                                            <div class="product-price">$@Html.DisplayFor(model => model.Price)</div>
+                                            <div class="ratings-container">
+                                                <div class="ratings-full">
+                                                    <span class="ratings" style="width:80%"></span>
+                                                    <span class="tooltiptext tooltip-top"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="product-form product-qty">
+                                    <div class="product-form-group">
+
+                                        <a href="#" class="btn-cart" title="Add to cart">
+                                            <i class="d-icon-bag"></i>Add to Cart
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="product-divider mb-3">
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab tab-nav-simple product-tabs mb-4">
+                <ul class="nav nav-tabs justify-content-center" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#product-tab-description">Description</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active in" id="product-tab-description">
+                        <div class="row mt-12">
+                            <div class="col-md-12">
+                                <h5 class="description-title mb-4 font-weight-semi-bold ls-m">Description</h5>
+                                <p class="mb-2">
+                                   @Html.DisplayFor(model => model.LongDescription)
+                                </p>
+                                <h5 class="description-title mb-3 mt-5 font-weight-semi-bold ls-m">
+                                    Specifications
+                                </h5>
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <th class="font-weight-semi-bold text-dark pl-0">Category:</th>
+                                            <td class="pl-4">@Html.DisplayFor(model => model.Category.Category_Name)</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="font-weight-semi-bold text-dark pl-0">Availability in stock:</th>
+                                            <td class="pl-4">@Html.DisplayFor(model => model.Available_Stock)</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="font-weight-semi-bold text-dark pl-0">
+                                                Recommended Use
+                                            </th>
+                                            <td class="pl-4"> Wash hands before use :)</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</main>
+

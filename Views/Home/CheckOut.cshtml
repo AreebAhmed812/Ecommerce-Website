@@ -1,0 +1,132 @@
+﻿@using eCommerceWebsite_1912C1.Models
+@{
+    ViewBag.Title = "CheckOut";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+<main class="main checkout">
+    <div class="page-content pt-7 pb-10 mb-10">
+        <div class="container mt-7">
+            <form action="#" class="form">
+
+
+                @if (Session["cart"] == null)
+                {
+                    <div class="alert alert-danger">
+                        <p style="color:black;"> No product added to cart! </p>
+                    </div>
+                }
+                else
+                {
+                <div class="row">
+                    <div class="col-lg-7 mb-6 mb-lg-0 pr-lg-4">
+                        <h3 class="title title-simple text-left text-uppercase">Billing Details</h3>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label>Full Name *</label>
+                                <input type="text" class="form-control" name="first-name" value="@Session["UserName"]" readonly />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label>Address *</label>
+                                <input type="text" class="form-control" name="first-name" value="@Session["UserAddress"]" readonly />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label>Phone *</label>
+                                <input type="text" class="form-control" name="first-name" value="@Session["UserPhone"]" readonly />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label>Email *</label>
+                                <input type="text" class="form-control" name="first-name" value="@Session["UserEmail"]" readonly />
+                            </div>
+                        </div>
+                    </div>
+                    <aside class="col-lg-5 sticky-sidebar-wrapper">
+                        <div class="sticky-sidebar mt-1" data-sticky-options="{'bottom': 50}">
+                            <div class="summary pt-5">
+                                <h3 class="title title-simple text-left text-uppercase">Your Order</h3>
+                                <table class="order-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Product</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    @{
+                                        int subtotal = 0;
+                                        int grandtotal = 0;
+                                    }
+                                    @foreach (cart item in (List<cart>)Session["cart"])
+                                    {
+                                        subtotal = Convert.ToInt32(item.qty) * Convert.ToInt32(item.Product.Price);
+                                        grandtotal += Convert.ToInt32(item.qty) * Convert.ToInt32(item.Product.Price);
+                                        <tr>
+                                            <td class="product-name">
+                                                @item.Product.Name <span class="product-quantity">×&nbsp; @item.qty</span>
+                                            </td>
+                                            <td class="product-total text-body">$@subtotal</td>
+                                        </tr>
+                                    }
+
+                                        <tr class="summary-subtotal">
+                                            <td>
+                                                <h4 class="summary-subtitle">Grand Total</h4>
+                                            </td>
+                                            <td class="summary-subtotal-price pb-0 pt-0">
+                                                $@grandtotal
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="payment accordion radio-type">
+                                    <h4 class="summary-subtitle ls-m pb-3">Payment Methods</h4>
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <a href="#collapse1" class="collapse text-body text-normal ls-m">
+                                                Check payments
+                                            </a>
+                                        </div>
+                                        <div id="collapse1" class="expanded" style="display: block;">
+                                            <div class="card-body ls-m">
+                                                Please send a check to Store Name, Store Street,
+                                                Store Town, Store State / County, Store Postcode.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <a href="#collapse2" class="expand text-body text-normal ls-m">Cash on delivery</a>
+                                        </div>
+                                        <div id="collapse2" class="collapsed">
+                                            <div class="card-body ls-m">
+                                                Pay with cash upon delivery.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-checkbox mt-4 mb-5">
+                                    <input type="checkbox" class="custom-checkbox" id="terms-condition"
+                                           name="terms-condition" />
+                                    <label class="form-control-label" for="terms-condition">
+                                        I have read and agree to the website <a href="#">terms and conditions </a>*
+                                    </label>
+                                </div>
+                                <a href="/Home/PlaceOrder" class="btn btn-dark btn-rounded btn-order">Place Order</a>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+                }
+            </form>
+        </div>
+    </div>
+</main>
+

@@ -1,0 +1,78 @@
+﻿@model eCommerceWebsite_1912C1.Models.User
+
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+<main class="main">
+    <nav class="breadcrumb-nav">
+        <div class="container">
+            <ul class="breadcrumb">
+                <li><a href="#"><i class="d-icon-home"></i></a></li>
+                <li>Register</li>
+            </ul>
+        </div>
+    </nav>
+    <div class="page-content mt-6 pb-2 mb-10">
+        <div class="container">
+            <div class="login-popup">
+                <div class="form-box">
+                    <div class="tab tab-nav-simple tab-nav-boxed form-tab">
+                        <ul class="nav nav-tabs nav-fill align-items-center border-no justify-content-center mb-5" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active border-no lh-1 ls-normal" href="#register">Register</a>
+                            </li>
+
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="register">
+                                @using (Html.BeginForm())
+                                {
+                                    <div class="form-group">
+                                        @Html.ValidationMessage("UserVerification", "", new { style = "font-size:12px; color:red; font-weight:bold;" })
+                                        @Html.ValidationMessageFor(model => model.Email, "", new { style = "font-size:12px; color:red; font-weight:bold;" })
+                                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { type = "email", @class = "form-control", placeholder = "Your Email address" } })
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.ValidationMessageFor(model => model.Name, "", new { style = "font-size:12px; color:red; font-weight:bold;" })
+                                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Your Full Name" } })
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.ValidationMessageFor(model => model.City, "", new { style = "font-size:12px; color:red; font-weight:bold;" })
+                                        @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control", placeholder = "Your City" } })
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.ValidationMessageFor(model => model.Address, "", new { style = "font-size:12px; color:red; font-weight:bold;" })
+                                        @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", placeholder = "Your Full Address" } })
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.ValidationMessageFor(model => model.Password, "", new { style = "font-size:12px; color:red; font-weight:bold;" })
+                                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", placeholder = "Your Password", type = "password" } })
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.ValidationMessageFor(model => model.Confirm_password, "", new { style = "font-size:12px; color:red; font-weight:bold;" })
+                                        @Html.EditorFor(model => model.Confirm_password, new { htmlAttributes = new { @class = "form-control", placeholder = "Confirm Password", type = "password" } })
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.ValidationMessageFor(model => model.Contact_Number, "", new { style = "font-size:12px; color:red; font-weight:bold;" })
+                                        @Html.EditorFor(model => model.Contact_Number, new { htmlAttributes = new { @class = "form-control", placeholder = "Your Contact Number" } })
+                                    </div>
+
+                                    <input type="submit" class="btn btn-dark btn-block btn-rounded" value="Register" />
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+

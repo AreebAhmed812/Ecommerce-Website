@@ -1,0 +1,196 @@
+﻿@model eCommerceWebsite_1912C1.Models.Products_with_Filter
+@using PagedList.Mvc
+
+@{
+    ViewBag.Title = "Shop";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+<style>
+    .ul.pagination {
+        display: inline-block;
+        padding: 0;
+        margin: 0;
+    }
+
+    ul.pagination li {
+        display: inline;
+    }
+
+        ul.pagination li a {
+            color: black;
+            float: left;
+            padding: 8px 16px;
+            text-decoration: none;
+            transition: background-color .3s;
+        }
+
+            ul.pagination li a.active {
+                background-color: #4CAF50;
+                color: white;
+            }
+
+            ul.pagination li a:hover:not(.active) {
+                background-color: #ddd;
+            }
+</style>
+
+
+
+<main class="main">
+    <div class="page-header"
+         style="background-image: url('/External/Main/images/shop/page-header-back.jpg'); background-color: #3C63A4;">
+        <h1 class="page-title">Shop</h1>
+
+
+        <ul class="breadcrumb">
+            <li><a href="/Home/Index"><i class="d-icon-home"></i></a></li>
+            <li class="delimiter">/</li>
+            <li>Shop</li>
+        </ul>
+
+
+        @if (TempData["SuccessAdded"] != null)
+        {
+            <div class="alert alert-success alert-dark alert-round alert-inline">
+                <h4 class="alert-title">Success :</h4>
+                @TempData["SuccessAdded"]
+                <button type="button" class="btn btn-link btn-close">
+                    <i class="d-icon-times"></i>
+                </button>
+            </div>
+        }
+
+
+    </div>
+    <!-- End PageHeader -->
+    <div class="page-content mb-10 pb-6">
+        <div class="container">
+            <div class="row gutter-lg main-content-wrap">
+                <aside class="col-lg-3 sidebar sidebar-fixed sidebar-toggle-remain shop-sidebar sticky-sidebar-wrapper">
+                    <div class="sidebar-overlay"></div>
+                    <a class="sidebar-close" href="#"><i class="d-icon-times"></i></a>
+
+                    @using (Html.BeginForm("Shop","Home",FormMethod.Post))
+                    { 
+                        <div class="sidebar-content">
+                        <div class="sticky-sidebar" data-sticky-options="{'top': 10}">
+                            <div class="filter-actions mb-4">
+                                <a href="#"
+                                   class="sidebar-toggle-btn toggle-remain btn btn-outline btn-primary btn-icon-right">
+                                    Filter<i class="d-icon-arrow-left"></i>
+                                </a>
+                            </div>
+
+                            <div class="widget widget-collapsible">
+                                <h3 class="widget-title">All Categories</h3>
+                                <ul class="widget-body filter-items">
+                                    @Html.DropDownList("Category_ID", null, "-- Select Category --", htmlAttributes: new { @class = "form-control"})
+                                </ul>
+                            </div>
+                            <div class="widget widget-collapsible">
+                                <h3 class="widget-title">Filter by Price</h3>
+                                <div class="widget-body">
+
+                                    <div class="filter-actions" style="margin-top:-10px;">
+
+                                        <div id="slider-range" class="price-filter-range" name="rangeInput"></div>
+
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <input type="number" style="width:80%;" min=0 max="9900" oninput="validity.valid||(value='0');" id="min_price" name="min_price" class="price-range-field" readonly />
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <input type="number" style="width:80%;" min=0 max="10000" oninput="validity.valid||(value='10000');" id="max_price" name="max_price" class="price-range-field" readonly />
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                            <button type="submit"
+                                    class="btn btn-dark btn-filter">
+                                Filter
+                            </button>
+                        </div>
+                    </div>
+                    }
+
+
+
+                </aside>
+                <div class="col-lg-9 main-content">
+                    <nav class="toolbox sticky-toolbox sticky-content fix-top">
+                        <div class="toolbox-left">
+                            <a href="#"
+                               class="toolbox-item left-sidebar-toggle btn btn-sm btn-outline btn-primary btn-icon-right d-lg-none">
+                                Filter<i class="d-icon-arrow-right"></i>
+                            </a>
+
+                        </div>
+
+                    </nav>
+                    <div class="product-lists product-wrapper">
+
+
+                        <!-- START OF PRODUCTS -->
+                        @foreach (var item in Model.productList)
+                        {
+                        <div class="product product-list">
+                            <figure class="product-media">
+                                <a href="/Home/ProductDetails/@item.Product_id">
+                                    <img src="@Html.DisplayFor(model => item.Picture)" alt="product" width="260" height="293">
+                                </a>
+                                <div class="product-label-group">
+                                    <label class="product-label label-new">new</label>
+                                </div>
+                            </figure>
+                            <div class="product-details">
+                                <div class="product-cat">
+                                    <a href="shop-grid-3col.html">@Html.DisplayFor(model => item.Category.Category_Name)</a>
+                                </div>
+                                <h3 class="product-name">
+                                    <a href="/Home/ProductDetails/@item.Product_id">@Html.DisplayFor(model => item.Name)</a>
+                                </h3>
+                                <div class="product-price">
+                                    <span class="price">$@Html.DisplayFor(model => item.Price)</span>
+                                </div>
+
+                                <p class="product-short-desc">
+                                    @Html.DisplayFor(model => item.ShortDescription)
+                                </p>
+                                <div class="product-action">
+                                    <a href="@Url.Action("AddToCart", "Home", new { productId = item.Product_id, url = "Shop" })" class="btn-cart" data-toggle="modal"
+                                       data-target="#addCartModal" title="Add to cart">
+                                        <i class="d-icon-bag"></i><label>Add to cart</label>
+                                    </a>
+
+                                </div>
+                            </div>
+                        </div>
+                            }
+                        <!-- END OF PRODUCTS -->
+
+
+
+
+
+
+                    </div>
+                    <nav class="toolbox toolbox-pagination mt-6">
+                        <p class="show-info">Page 1 of 1 </p>
+                        <ul class="pagination">
+                            <li class="pagination page-item active" aria-current="page" style="margin-left: 400px">
+                                1
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+

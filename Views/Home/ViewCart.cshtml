@@ -1,0 +1,117 @@
+﻿@using eCommerceWebsite_1912C1.Models
+@{
+    ViewBag.Title = "ViewCart";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+<main class="main cart">
+    <div class="page-content pt-7 pb-10">
+        <div class="container mt-7 mb-2">
+
+            @if(Session["cart"] == null)
+            {
+                <div class="alert alert-danger">
+                    <p style="color:black;"> No product added to cart! </p>
+                </div>
+            }
+            else
+            {
+            <div class="row">
+                <div class="col-lg-8 col-md-12 pr-lg-4">
+                    <table class="shop-table cart-table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th><span>Product</span></th>
+                                <th><span>Price</span></th>
+                                <th><span>quantity</span></th>
+                                <th>Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                          @{ 
+                              int subtotal = 0;
+                              int grandtotal = 0;
+                          }
+                        @foreach (cart item in (List<cart>)Session["cart"])
+                        {
+                            subtotal = Convert.ToInt32(item.qty) * Convert.ToInt32(item.Product.Price);
+                            grandtotal += Convert.ToInt32(item.qty) * Convert.ToInt32(item.Product.Price);
+                            <tr>
+                                <td class="product-thumbnail">
+                                    <figure>
+                                        <a href="/Home/ProductDetails/@item.Product.Product_id">
+                                            <img src="@item.Product.Picture" width="100" height="100"
+                                                 alt="product">
+                                        </a>
+                                    </figure>
+                                </td>
+                                <td class="product-name">
+                                    <div class="product-name-section">
+                                        <a href="/Home/ProductDetails/@item.Product.Product_id">@item.Product.Name</a>
+                                    </div>
+                                </td>
+                                <td class="product-subtotal">
+                                    <span class="amount">$@item.Product.Price</span>
+                                </td>
+                                <td class="product-quantity">
+                                    <!-- Step-1) Create design for Increasing and Decreasing Quantity Dynamically -->
+                                    <div class="input-group" style="letter-spacing:8px;margin:15px;">
+
+                                        <a href="@Url.Action("DecreaseQty", "Home", new {productid = item.Product.Product_id})"
+                                           class="quantity-minus">
+                                            <i class="fa fa-minus"></i>
+                                        </a>
+
+                                        <span class="quantity">@item.qty</span>
+
+                                        <a href="@Url.Action("AddToCart", "Home", new {productid=item.Product.Product_id,url="ViewCart"})"
+                                           class="quantity-plus">
+                                            <i class="fa fa-plus"></i>
+                                        </a>
+
+                                    </div>
+                                    <!-- Step-1 ends here. -->
+                                </td>
+                                <td class="product-price">
+                                    <span class="amount">$@subtotal</span>
+                                </td>
+                                <td class="product-close">
+                                    <a href="@Url.Action("RemoveFromCart","Home", new { productId =
+                                                            item.Product.Product_id, url ="ViewCart"})" class="product-remove" title="Remove this product">
+                                        <i class="fas fa-times"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                         }
+                        </tbody>
+                    </table>
+                    <div class="cart-actions mb-6 pt-4">
+                        <a href="/Home/Shop" class="btn btn-dark btn-md btn-rounded btn-icon-left mr-4 mb-4"><i class="d-icon-arrow-left"></i>Continue Shopping</a>
+                    </div>
+
+                </div>
+                <aside class="col-lg-4 sticky-sidebar-wrapper">
+                    <div class="sticky-sidebar" data-sticky-options="{'bottom': 20}">
+                        <div class="summary mb-4">
+                            <h3 class="summary-title text-left">Cart Totals</h3>
+                            <table class="total">
+                                <tr class="summary-subtotal">
+                                    <td>
+                                        <h4 class="summary-subtitle">Total</h4>
+                                    </td>
+                                    <td>
+                                        <p class="summary-total-price ls-s">$@grandtotal</p>
+                                    </td>
+                                </tr>
+                            </table>
+                            <a href="/Home/Checkout" class="btn btn-dark btn-rounded btn-checkout">Proceed to checkout</a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+            }
+        </div>
+    </div>
+</main>
+
